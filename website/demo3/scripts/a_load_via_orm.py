@@ -1,5 +1,13 @@
 """
 loads the test table using the ORM to translate from Python to SQL
+
+Pros:
++ Easy to read
++ Stays in one language (Python)
+
+Cons:
+- Slow
+- Very Slow
 """
 import json
 import time
