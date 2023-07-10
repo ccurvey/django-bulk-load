@@ -24,7 +24,7 @@ I'm still using the django-extensions "runscript" command just for consistency
 
 * psycopg3 is out, and it supports prepared statements under certain conditions.
   - You can't use prepared statements with PgBouncer (maybe you could fake it with
-    transactions
+    transactions).  I'd hate to lose PgBouncer -- that might be the cheapest peformance
+    win in history (if you have a lot of connections)
   - There are syntax and behavioral changes in psycopg3, but you're probably going to
     have to deal with that sooner or later
-* PgBouncer might be the cheapest win ever for production-level numbers of connections
