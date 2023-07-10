@@ -1,54 +1,30 @@
-# Packages
+# What This Is
 
-As pydanny so eloquently put it: *This is what I want.  It might not be what you want.*
+It's the sample code for a presentation comparing different methods of loading
+bulk data into a Postgres database using Python -- sometimes with Django, sometimes
+without
 
-Look at Pipfile for specifics, but the general setup is:
+# Running the Samples
 
-## For production
+Once you create the table (in some form of Postgres), the good stuff is in
+website/demo3/scripts.  You can run the scripts with
 
-* django + postgres
-* mailauth for authentication
-* bootstrap-related stuff for styling
-* some other useful packages (requests, vanilla views, django-extensions etc)
+`python manage.py runscript <script-name>`
 
-## For Development
+(without the .py extension).  Some of the scripts don't use any part of Django, but
+I'm still using the django-extensions "runscript" command just for consistency
 
-* black
-* pytest
-* factory-boy
+# Observations
 
-# Project Setup
+* The obvious speed champion is `d_make_bulk_file` -- if you don't mind the complexity
+* I'm surprised at how much faster it is to create a psycopg2 connection and use that,
+  rather than using the one you get by `from django.db import connection`
 
-The core django settings will go in a directory called "website".  Then there
-will be an app started with "project_name".
+# Future Research
 
-There's some very simple stuff in there, mostly so that I don't have to remember the
-structure of things like urls.py and wiring all the urls files together.
-
-If you look at settings.py, you'll see that I like to leave the standard django
-settings file alone, then override or add to it at the bottom.  I find that that
-makes it easier to see what settings were changed and why.
-
-# How To Use
-
-After running cookiecutter
-
-## Install python packages
-```
-$ cd demo3
-$ sh ./install_packages.sh
-```
-
-## Create PG database and superuser
-
-```
-$ pipenv shell
-$ cd website
-$ sh ./finish_setup.sh
-```
-
-## Start your server:
-
-```
-$ python manage.py runserver
-```
+* psycopg3 is out, and it supports prepared statements under certain conditions.
+  - You can't use prepared statements with PgBouncer (maybe you could fake it with
+    transactions
+  - There are syntax and behavioral changes in psycopg3, but you're probably going to
+    have to deal with that sooner or later
+* PgBouncer might be the cheapest win ever for production-level numbers of connections

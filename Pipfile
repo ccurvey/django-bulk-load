@@ -14,7 +14,6 @@ django-vanilla-views = "*"
 django-bootstrap5 = "*"
 django-mail-auth = "*"
 django-email-log = "*"
-psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 black = "*"

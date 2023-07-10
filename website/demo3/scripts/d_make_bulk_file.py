@@ -1,7 +1,19 @@
 """
-to load the resulting file, use:
+Create a pre-formatted text file and use the Postgres database utility to load it.
+
+After creating the file, use this to load it
 
 $  psql demo3 -c "\copy demo3_testme (identifier, name, source) from '/home/chris/learn/demo3/website/pre_digested_file.txt'"
+
+Pros:
++ Easily the fastest execution
+
+Cons:
+- no ORM goodness
+- Two steps
+- The bulk commands can be a bit fiddly and brittle (and they're another thing to learn)
+- You need a filesystem big enough to hold the file
+- Single table only
 
 """
 import json

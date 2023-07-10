@@ -1,3 +1,20 @@
+"""
+Create a pre-formatted file for loading, but write it into a StringIO object and
+use the "copy_from" command for this
+
+Pro:
++ Pretty fast
++ Only one program/step
++ No intermediate file needed
+
+Con:
+- no ORM goodness
+- single table only
+- The bulk commands can be a bit fiddly and brittle (and they're another thing to learn)
+
+"""
+
+
 import json
 import csv
 import io

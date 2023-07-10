@@ -1,3 +1,14 @@
+"""
+load the table by building our own SQL statements manually
+and pushing them through the connection provided by Django
+
+Pro:
++ a bit faster
+
+Con:
+- you need to write your own SQL
+- you lose all the ORM goodness like inheritance and type checking
+"""
 import json
 import time
 

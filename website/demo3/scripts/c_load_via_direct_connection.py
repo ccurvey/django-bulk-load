@@ -1,3 +1,16 @@
+"""
+load the table in the most traditional way -- by getting your own connection
+(rather than the Django-provided one) and using that
+
+Pro:
++ Surprisingly faster than the Django connection
+
+Con:
+- you need to write your own SQL
+- you lose all the ORM goodness like inheritance and type checking
+
+
+"""
 import json
 import os
 import time

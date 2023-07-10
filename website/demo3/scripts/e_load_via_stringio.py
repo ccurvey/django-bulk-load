@@ -1,10 +1,23 @@
+"""
+Create a pre-formatted file for loading, but write it into a StringIO object and
+use the "copy_from" command for this
+
+Pro:
++ Suprisingly fast
++ Only one program/step
++ No intermediate file needed
+
+Con:
+- no ORM goodness
+- single table only
+- The bulk commands can be a bit fiddly and brittle (and they're another thing to learn)
+
+"""
 import json
 import csv
 import io
 import time
-import os
 
-import psycopg2
 from django.db import connection, reset_queries
 
 
@@ -13,7 +26,7 @@ def run():
         open("/home/chris/Downloads/consolidated-pretty.json", "r")
     )
 
-    # connection = psycopg2.connect(os.environ['DATABASE_URL'])
+    connection = psycopg2.connect(os.environ['DATABASE_URL'])
     cursor = connection.cursor()
 
     bulk_file = io.StringIO()
