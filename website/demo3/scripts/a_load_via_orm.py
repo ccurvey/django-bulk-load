@@ -41,7 +41,7 @@ def run():
             )
 
             # PROTIP FOR DJANGO: be sure to call reset_queries() occasionally to
-            # prevent debugging memory leaks
+            # prevent debugging memory leaks when DEBUG=True
             reset_queries()
 
     print("--- %s seconds ---" % (time.time() - start_time))
