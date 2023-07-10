@@ -1,0 +1,16 @@
+{% extends "demo3/authenticated_base.html" %}
+
+
+{% block page_content %}
+  <h1>{{object.first_name}}&nbsp;{{object.last_name}}</h1>
+
+  <table class="table">
+    {% for name, value in object.get_fields %}
+      <tr>
+        <th>{{name}}</th>
+        <td>{{value}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock page_content %}

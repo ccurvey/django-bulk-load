@@ -1,0 +1,108 @@
+{% load simple_menu %}
+{% load django_bootstrap5 %}
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    {% block topnav %}
+      {% generate_menu %}
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Stuffback</a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+              {% for item in menus.MainMenu %}
+                <li class="nav-item  {% if item.children %}dropdown{% endif %}">
+
+                  <a href="{{item.url}}" class="nav-link
+                      {#  build the CSS class first #}
+                      {% if item.selected %} active {% endif %}
+                      {% if item.children %} dropdown-toggle {% endif %}
+
+                      {# add additional attributes after building the class #}
+                      {% if item.selected %}
+                        aria-current="page"
+                      {% endif %}"
+
+                      {% if item.children %}
+                        id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                      {% endif %}
+
+                  >  {# close the "a" tag #}
+
+                    {% if item.icon %}
+                      <i class="icon-{{ item.icon }} icon-white"></i>&nbsp;
+                    {% endif %}
+
+                    <span>{{item.title}}</span>
+
+                    {% if item.children %}
+                      &nbsp;<b class="caret"></b>
+                    {% endif %}
+
+                  </a>
+
+                  {# if there are children, put stuff in place for that #}
+                  {% if item.children %}
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      {% for child in item.children %}
+                        <li><a class="dropdown-item" href="{{child.url}}">{{child.title}}</a></li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+
+                </li>
+              {% endfor %}
+            </ul>
+
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+            {# TODO: add person icon, make this a dropdown with profile #}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                  <a href="{% url 'mailauth:logout' %}" class="nav-link">logout</a>
+                {% else %}
+                  <a href="{% url 'mailauth:login' %}" class="nav-link"> login </a>
+                {% endif %}
+              </li>
+            </ul>
+
+
+          </div>
+        </div>
+      </nav>
+    {% endblock topnav %}
+
+    <div id="page-content" class="container">
+      {% bootstrap_messages %}
+
+      {% block page_content %}
+        Hello World!
+      {% endblock page_content %}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    {% block scripts %}{% endblock scripts %}
+  </body>
+</html>

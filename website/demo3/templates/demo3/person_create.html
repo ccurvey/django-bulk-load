@@ -1,0 +1,14 @@
+{% extends "demo3/authenticated_base.html" %}
+
+{% load django_bootstrap5 %}
+
+{% block page_content %}
+  <h1>Create New Person</h1>
+
+  <form method="POST" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="OK" %}
+
+{% endblock page_content %}
+

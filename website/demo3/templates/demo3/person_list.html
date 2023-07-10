@@ -1,0 +1,36 @@
+{% extends "demo3/authenticated_base.html" %}
+
+
+{% block page_content %}
+  <h1>Person List</h1>
+  <table class="table" id="person-table">
+    <thead>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">&nbsp</th>
+    </thead>
+    <tbody>
+      {% for person in object_list %}
+        <tr>
+          <td>
+            <a href="{% url 'demo3:person-detail' person.uuid %}">
+              {{person.first_name}}&nbsp;{{person.last_name}}
+            </a>
+          </td>
+          <td>{{person.email}}</td>
+          <td>
+            <a href="{% url 'demo3:person-update' person.uuid %}">Update</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock page_content %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function() {
+      $("#person-table").dataTable();
+    });
+  </script>
+{% endblock scripts %}
